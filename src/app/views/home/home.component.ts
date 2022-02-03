@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -8,22 +9,38 @@ import { Component, OnInit } from '@angular/core';
 
 export class HomeComponent implements OnInit {
 
-  public totalPrize: number = 0;
+  public totalPrice: number = 0;
   public web: number = 0;
   public seo: number = 0;
   public ads: number = 0;
 
+  public webForm: FormGroup = new FormGroup ({
+    web: new FormControl(),
+    seo: new FormControl(),
+    ads: new FormControl()
+  })
+
+
   constructor() { }
 
   ngOnInit(): void {
-    this.totalPrizeCalculate();
+    this.webForm.get('web')!.valueChanges.subscribe(check =>{
+      this.totalPriceCalculate(check, 500);
+    })
+    this.webForm.get('seo')!.valueChanges.subscribe(check =>{
+      this.totalPriceCalculate(check, 300);
+    })
+    this.webForm.get('ads')!.valueChanges.subscribe(check => {
+      this.totalPriceCalculate(check, 200);
+    })
   }
 
-  totalPrizeCalculate(){
-    this.web = this.totalPrize + 500;
+  totalPriceCalculate(check: boolean, price: number) {
+      if (check) {
+        this.totalPrice += price
+      } else {
+        this.totalPrice -= price
+      }
   }
-
-
-
 
 }
