@@ -1,0 +1,18 @@
+<div class="container-fluid m-3">
+  <p>¿Que quieres hacer?</p>
+  <form>
+    <div>
+      <input #web type="checkbox">
+      <label for="web">Una página web (500€)</label>
+    </div>
+    <div>
+      <input #seo type="checkbox">
+      <label for="seo">Una consultoria SEO (300€)</label>
+    </div>
+    <div>
+      <input #ads type="checkbox">
+      <label for="ads">Una campaña de Google Ads (200€)</label>
+    </div>
+  </form>
+  <p><span class="fw-bold">Precio:</span> {{totalPrize}} €</p>
+</div>
