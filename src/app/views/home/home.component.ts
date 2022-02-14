@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { PressupostService } from './../../shared/services/pressupost.service';
+
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,12 +9,18 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   public totalPrice: number = 0;
-  public web: number = 0;
-  public seo: number = 0;
-  public ads: number = 0;
+  public webCheck: boolean = false;
+  public subTotalPrice: number = 0;
+
+  constructor(private pressupostService: PressupostService) { }
+
+  ngOnInit(): void {
+    this.pressupostService.totalPrice = 0;
+    this.pressupostService.subTotalPrice = 0;
+  }
 
   public webForm: FormGroup = new FormGroup ({
     web: new FormControl(),
@@ -21,26 +29,29 @@ export class HomeComponent implements OnInit {
   })
 
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.webForm.get('web')!.valueChanges.subscribe(check =>{
-      this.totalPriceCalculate(check, 500);
+  ngAfterViewInit():void{
+    this.webForm.controls['web'].valueChanges.subscribe(check => {
+      this.webCheck = check;
+      this.pressupostService.subtotalPriceCalculate(check, 500);
+      this.refreshPrice();
     })
-    this.webForm.get('seo')!.valueChanges.subscribe(check =>{
-      this.totalPriceCalculate(check, 300);
+    this.webForm.controls['seo'].valueChanges.subscribe(check => {
+      this.pressupostService.subtotalPriceCalculate(check, 300);
+      this.refreshPrice();
     })
-    this.webForm.get('ads')!.valueChanges.subscribe(check => {
-      this.totalPriceCalculate(check, 200);
+    this.webForm.controls['ads'].valueChanges.subscribe(check => {
+      this.pressupostService.subtotalPriceCalculate(check, 200);
+      this.refreshPrice();
     })
   }
 
-  totalPriceCalculate(check: boolean, price: number) {
-      if (check) {
-        this.totalPrice += price
-      } else {
-        this.totalPrice -= price
-      }
+  setTotal(value: number): void{
+    this.pressupostService.setTotal(value);
+    this.refreshPrice();
   }
 
-}
+  refreshPrice(): void{
+    this.totalPrice = this.pressupostService.totalPrice;
+    this.subTotalPrice = this.pressupostService.subTotalPrice;
+    }
+  }

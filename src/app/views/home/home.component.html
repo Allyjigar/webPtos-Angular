@@ -1,18 +1,31 @@
-<div class="container-fluid m-3">
-  <p>¿Que quieres hacer?</p>
-  <form [formGroup]="webForm">
-    <div>
-      <input formControlName="web" type="checkbox">
-      <label for="web">Una página web (500€)</label>
-    </div>
-    <div>
-      <input formControlName="seo" type="checkbox">
-      <label for="seo">Una consultoria SEO (300€)</label>
-    </div>
-    <div>
-      <input formControlName="ads" type="checkbox">
-      <label for="ads">Una campaña de Google Ads (200€)</label>
-    </div>
-  </form>
-  <p><span class="fw-bold">Precio:</span> {{totalPrice}} €</p>
-</div>
+<body>
+  <div class="m-3">
+    <a [routerLink]="['/']" routerLinkActive="router-link-active" class="text-decoration-none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>&nbsp; Inicio
+    </a>
+  </div>
+
+  <div class="container-fluid m-3">
+    <p>¿Que quieres hacer?</p>
+    <form [formGroup]="webForm">
+      <div class="m-1">
+        <input formControlName="web" type="checkbox">
+        <label for="web">Una página web (500€)</label>
+      </div>
+      <div>
+        <app-panell [subTotal]="subTotalPrice" (newTotal)="setTotal($event)" *ngIf="webCheck"></app-panell>
+      </div>
+      <div class="m-1">
+        <input formControlName="seo" type="checkbox">
+        <label for="seo">Una consultoria SEO (300€)</label>
+      </div>
+      <div>
+        <input class="m-1" formControlName="ads" type="checkbox">
+        <label for="ads">Una campaña de Google Ads (200€)</label>
+      </div>
+    </form>
+    <p><span class="fw-bold">Precio:</span> {{totalPrice}} €</p>
+  </div>
+</body>
