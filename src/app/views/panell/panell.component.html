@@ -1,17 +1,21 @@
 
-<form [formGroup]="detailsForm" class="col-md-4 d-flex flex-column border border-dark border-4 rounded p-3">
+<form [formGroup]="detailsForm" class="col-md-7 d-flex flex-column border border-dark border-4 rounded p-3">
   <div class="m-2">
     <label class="m-3" for="">Número de páginas</label>
     <button class="col-1" (click)="addP()">+</button>
     <input type="number" formControlName="pages" [(ngModel)]="inputPages" class="col-3 border-0">
-    <button class="col-1" (click)="quitP()">-</button>
+    <button class="col-1" (click)="quitP()">-</button>  &nbsp; <button (click)="openDialog()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+      <path class="opacity-50" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </svg></button>
     <p class="text-danger" *ngIf="this.detailsForm.get('pages')?.errors?.['required']">Por favor, seleccione un número de páginas</p>
   </div>
   <div class="m-2">
     <label class="m-3" for="">Número de idiomas</label>
     <button class="col-1" (click)="addL()">+</button>
     <input type="number" formControlName="languages"  [(ngModel)]="inputLanguages" class="col-3 border-0" >
-    <button class="col-1" (click)="quitL()">-</button>
+    <button class="col-1" (click)="quitL()">-</button>  &nbsp; <button (click)="openDialog()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+      <path class="opacity-50" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </svg></button>
     <p class="text-danger" *ngIf="this.detailsForm.get('languages')?.errors?.['required']">Por favor, seleccione un número de idiomas</p>
   </div>
 </form>

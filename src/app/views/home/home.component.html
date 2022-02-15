@@ -7,7 +7,49 @@
     </a>
   </div>
 
-  <div class="container-fluid m-3">
+  <div class="m-3">
+    <p class="fw-bold">¿Qué quieres hacer?</p>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <form class="d-flex flex-column m-3" [formGroup]="webForm" (submit)="savePto()">
+        <div>
+          <label class="m-2" >Nombre de cliente</label>
+          <input type="text" formControlName="client">
+          <p class="m-2 text-danger small" *ngIf="this.webForm.get('client')?.errors?.['required']">*Por favor, indique el nombre de cliente</p>
+        </div>
+        <div>
+          <label class="m-2" >Nombre de presupuesto</label>
+          <input type="text" formControlName="pto">
+          <p class="m-2 text-danger small" *ngIf="this.webForm.get('pto')?.errors?.['required']">*Por favor, indique el nombre del presupuesto</p>
+        </div>
+        <div>
+          <input type="checkbox" formControlName="web">
+          <label class="m-2" >Una página web (500€)</label>
+        </div>
+        <div>
+          <app-panell *ngIf="webCheck" [subTotal]="subTotalPrice" (newTotal)="setTotal($event)" ></app-panell>
+        </div>
+        <div>
+          <input type="checkbox" formControlName="seo">
+          <label class="m-2" >Una consultoria SEO (300 €)</label>
+        </div>
+        <div>
+          <input type="checkbox" formControlName="ads">
+          <label class="m-2" >Una campanya de Google Ads (200 €)</label>
+        </div>
+        <p class="fw-bold m-3">Precio: {{totalPrice}} € </p>
+        <button class="btn col-5 m-1" type="submit"  [disabled]="!webForm.valid">Guardar presupuesto</button>
+      </form>
+
+    </div>
+    <div class="col-4">
+    <app-list></app-list>
+    </div>
+  </div>
+
+  <!-- <div class="container-fluid m-3">
     <p>¿Que quieres hacer?</p>
     <form [formGroup]="webForm">
       <div class="m-1">
@@ -27,5 +69,5 @@
       </div>
     </form>
     <p><span class="fw-bold">Precio:</span> {{totalPrice}} €</p>
-  </div>
+  </div> -->
 </body>

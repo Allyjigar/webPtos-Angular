@@ -1,0 +1,25 @@
+<div class="col-12 d-flex flex-column align-items-center">
+  <h4 class="mb-5">Presupuestos guardados</h4>
+  <div class="col-12 d-flex">
+    <button class="btn m-1" (click)="ordenaAlfa()">Ordenar alfabéticamente</button>
+    <button class="btn m-1" (click)="ordenaDate()">Ordenar por fecha</button>
+    <button class="btn m-1" (click)="resetOrdena()">Reiniciar</button>
+  </div>
+  <div class="col-12">
+      <input class="m-2" #searched type="text" [(ngModel)]="filterpost" name="filterpost" placeholder="Buscar...">
+  </div>
+  <div class="d-flex flex-column align-items-center mt-2">
+    <ul class="col-12 border border-success border-4 p-3" *ngFor="let pressupost of pressupostList | filter: filterpost; let i = index">
+      <li class="list-unstyled">
+        <p><span class="fw-bold">Fecha del presupuesto:</span>{{' ' +pressupost.date.toLocaleString()}}</p>
+        <p><span class="fw-bold">Nombre de cliente:</span>{{' ' + pressupost.client}}</p>
+        <p><span class="fw-bold">Nombre de presupuesto:</span> {{' ' + pressupost.ptoName}}</p>
+        <p><span class="fw-bold">Opciones seleccionadas:</span>(en verde)</p>
+          <p class="fw-bold" [class.text-success]="pressupost.web == true" [class.text-danger]="pressupost.web != true">Web</p>
+          <p class="fw-bold" [class.text-success]="pressupost.seo == true" [class.text-danger]="pressupost.seo != true">Seo</p>
+          <p class="fw-bold" [class.text-success]="pressupost.ads == true" [class.text-danger]="pressupost.ads != true">Ads</p>
+        <p><span class="fw-bold">Total:</span>{{' ' + pressupost.totalPrice}}<span class="fw-bold">&nbsp; €</span></p>
+      </li>
+    </ul>
+  </div>
+</div>

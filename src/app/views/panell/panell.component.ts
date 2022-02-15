@@ -1,6 +1,8 @@
 import { PressupostService } from './../../shared/services/pressupost.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AfterContentInit, Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 
 @Component({
@@ -12,18 +14,21 @@ export class PanellComponent implements AfterContentInit{
 
   @Input() subTotal: number = 0;
   @Output() newTotal = new EventEmitter<number>();
-  inputPages: number = 0;
-  inputLanguages: number = 0;
-  
+  public inputPages: number = 0;
+  public inputLanguages: number = 0;
+
 
   public detailsForm: FormGroup = new FormGroup ({
     pages: new FormControl(1, [Validators.required, Validators.min(1)]),
     languages: new FormControl(1, [Validators.required, Validators.min(1)])
   })
 
-  constructor(private pressupostService: PressupostService) {
+  constructor(private _pressupostService: PressupostService,
+              public dialog: MatDialog) {
   }
 
+
+  // suma o resta dels botons + i - dels inputs pages i languages
   addP(){
     this.inputPages = this.detailsForm.get('pages')!.value;
     this.inputPages++;
@@ -52,15 +57,25 @@ export class PanellComponent implements AfterContentInit{
     }
   }
 
+  //Funció que obre modal
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalComponent);
 
-  ngAfterContentInit(){
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+
+  //envia els valors recollits de pages i languages a la funció del servei per calcular juntament amb el subtotal
+  ngAfterContentInit(): void{
     this.detailsForm.get('pages')!.valueChanges.subscribe(pages => {
       let languages = parseInt(this.detailsForm.get('languages')!.value);
-      this.newTotal.emit(this.pressupostService.totalPriceCalculate(this.subTotal, pages, languages));
+      this.newTotal.emit(this._pressupostService.totalPriceCalculate(this.subTotal, pages, languages));
     });
     this.detailsForm.get('languages')!.valueChanges.subscribe(languages => {
       let pages = parseInt(this.detailsForm.get('pages')!.value);
-      this.newTotal.emit(this.pressupostService.totalPriceCalculate(this.subTotal,pages, languages));
+      this.newTotal.emit(this._pressupostService.totalPriceCalculate(this.subTotal,pages, languages));
     });
   }
 
